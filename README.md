@@ -38,6 +38,10 @@ Modify the existing case statement to handle various command line arguments. Upd
 Step 9: Test the Script
 Test your script with various commands to ensure it behaves as expected. You can use sample inputs and check if the outputs match the expected format.
 
+**./internsctl man**
+
+![image](https://github.com/rajat457/linuxcustom/assets/91472404/72da20ae-cb09-4262-8a16-bd5238563061)
+
 **./internsctl --help**
 
 ![image](https://github.com/rajat457/linuxcustom/assets/91472404/37a852d6-21ab-44f0-b4d0-ef2a20a7db69)
