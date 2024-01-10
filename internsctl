@@ -1,0 +1,118 @@
+#!/bin/bash
+
+# Function to display the manual page for internsctl
+function show_manual() {
+    echo "internsctl(1) - Custom Linux Command"
+    echo "NAME"
+    echo "    internsctl - Custom Linux Command"
+    echo "SYNOPSIS"
+    echo "    internsctl [options] <command>"
+    echo "DESCRIPTION"
+    echo "    Custom Linux command for various operations."
+    echo "OPTIONS"
+    echo "    man      Display manual page"
+    echo "    --help   Display help information"
+    echo "    --version Display command version"
+    echo "COMMANDS"
+    echo "    cpu getinfo           Get CPU information"
+    echo "    memory getinfo        Get memory information"
+    echo "    user create <username> Create a new user"
+    echo "    user list             List all regular users"
+    echo "    user list --sudo-only List users with sudo permissions"
+    echo "    file getinfo <file-name> Get information about a file"
+    echo "    file getinfo [options] <file-name> Get specific information about a file"
+}
+
+# Function to display help information
+function show_help() {
+    echo "Usage: internsctl [options] <command>"
+    echo "Options:"
+    echo "    man      Display manual page"
+    echo "    --help   Display help information"
+    echo "    --version Display command version"
+    echo "Commands:"
+    echo "    cpu getinfo           Get CPU information"
+    echo "    memory getinfo        Get memory information"
+    echo "    user create <username> Create a new user"
+    echo "    user list             List all regular users"
+    echo "    user list --sudo-only List users with sudo permissions"
+    echo "    file getinfo <file-name> Get information about a file"
+    echo "    file getinfo [options] <file-name> Get specific information about a file"
+}
+
+# Function to display command version
+function show_version() {
+    echo "internsctl v0.1.0"
+}
+
+# Function to get CPU information
+function get_cpu_info() {
+    lscpu
+}
+
+# Function to get memory information
+function get_memory_info() {
+    free
+}
+
+# Function to create a new user
+function create_user() {
+    sudo useradd "$1"
+    sudo passwd "$1"
+}
+
+# Function to list all regular users
+function list_users() {
+    getent passwd | cut -d: -f1
+}
+
+# Function to list users with sudo permissions
+function list_sudo_users() {
+    getent passwd | grep -E 'sudo|admin' | cut -d: -f1
+}
+
+# Function to get file information
+function get_file_info() {
+    file_name="$1"
+    stat_output=$(stat "$file_name")
+    
+    echo "File: $file_name"
+    echo "Access: $(stat -c %A "$file_name")"
+    echo "Size(B): $(stat -c %s "$file_name")"
+    echo "Owner: $(stat -c %U "$file_name")"
+    echo "Modify: $(stat -c %y "$file_name")"
+}
+
+# Handle command line arguments
+case "$1" in
+    "man") show_manual ;;
+    "--help") show_help ;;
+    "--version") show_version ;;
+    "cpu" )
+        case "$2" in
+            "getinfo") get_cpu_info ;;
+            *) echo "Invalid CPU command" ;;
+        esac
+        ;;
+    "memory" )
+        case "$2" in
+            "getinfo") get_memory_info ;;
+            *) echo "Invalid memory command" ;;
+        esac
+        ;;
+    "user" )
+        case "$2" in
+            "create") create_user "$3" ;;
+            "list") list_users ;;
+            "--sudo-only") list_sudo_users ;;
+            *) echo "Invalid user command" ;;
+        esac
+        ;;
+    "file" )
+        case "$2" in
+            "getinfo") get_file_info "$3" ;;
+            *) echo "Invalid file command" ;;
+        esac
+        ;;
+    *) echo "Invalid command" ;;
+esac
