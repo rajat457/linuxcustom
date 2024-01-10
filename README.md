@@ -54,7 +54,7 @@ Test your script with various commands to ensure it behaves as expected. You can
 
 ![image](https://github.com/rajat457/linuxcustom/assets/91472404/074aa5f1-4f6b-4827-99fc-cf37e5a7961f)
 
-**./internsctl user create <username>**
+**./internsctl user create rajat457**
 
 ![image](https://github.com/rajat457/linuxcustom/assets/91472404/b56b3d07-2da6-454b-ba46-11007a2bd3ab)
 
